@@ -10,38 +10,59 @@ namespace Client
     {
         static readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(2));
 
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
-            var fileName = args.Any() ? args[0] : @"C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays\4984038549.dem";
+            var path = args.Any() ? args[0] : @"C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays\" +
+                                              "4757318890.dem";
+                                              //"4984038549.dem";
 
             var cancellationToken = cancellationTokenSource.Token;
 
-            var cancelTask = Task.Factory.StartNew(() =>
+            var cancelTask = Task.Factory.StartNew(() => {
+                if (Console.ReadKey().Key == ConsoleKey.Escape) cancellationTokenSource.Cancel(true);
+            }, cancellationToken);
+
+            var shortFileName = path.Split('\\').Last();
+            Console.WriteLine($"Beginning to parse \"{shortFileName}\"");
+
+            var parser = new Parser();
+            var parseTask = parser.ParseFromFileAsync(path, cancellationToken);
+
+            Task.WhenAny(cancelTask, parseTask).ConfigureAwait(true).GetAwaiter().GetResult();
+
+            if (cancelTask.IsCanceled)
             {
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Escape)
-                {
-                    cancellationTokenSource.Cancel(true);
-                }
-            }, CancellationToken.None);
-
-            var shortFileName = fileName.Split('/').Reverse().First();
-            Console.WriteLine($"Beginning to parse {shortFileName}");
-
-            var parser = new Parser(cancellationToken);
-            var parseTask = parser.ParseFromFileAsync(fileName);
-
-            Task.WhenAny(cancelTask, parseTask).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            var exitCode = cancelTask.IsCompletedSuccessfully
-                ? 100 - (int) parseTask.Status // error code, sure
-                : TaskStatus.RanToCompletion - parseTask.Status; // success = 0
-
-            Console.WriteLine($"Exited with {exitCode}");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Parse cancelled'");
+                Console.ResetColor();
+            }
+            else if (parseTask.IsFaulted)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(parseTask.Exception.Flatten());
+                Console.ResetColor();
+            }
+            else if (parseTask.IsCompleted && !parseTask.IsCompletedSuccessfully)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Unknown error? :(");
+                Console.WriteLine("==============");
+                Console.WriteLine(parseTask.Exception.Flatten());
+                Console.ResetColor();
+            }
+            else if (parseTask.IsCompletedSuccessfully)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Complete");
+                Console.ResetColor();
+            }
+            
 #if DEBUG
             Console.ReadLine();
 #endif
-            return exitCode;
         }
     }
 }
