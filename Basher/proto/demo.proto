@@ -150,6 +150,51 @@ message CDemoSpawnGroups {
 	repeated bytes msgs = 3;
 }
 
+message CNETMsg_Tick {
+	uint32 tick = 1;
+	uint32 host_computationtime = 4;
+	uint32 host_computationtime_std_deviation = 5;
+	uint32 host_framestarttime_std_deviation = 6;
+}
+
+message CNETMsg_SignonState {
+	uint32 signon_state = 1;
+	uint32 spawn_count = 2;
+	uint32 num_server_players = 3;
+	repeated string players_networkids = 4;
+	string map_name = 5;
+}
+
+message CSVCMsg_SendTable {
+	message sendprop_t {
+		int32 type = 1;
+		string var_name = 2;
+		int32 flags = 3;
+		int32 priority = 4;
+		string dt_name = 5;
+		int32 num_elements = 6;
+		float low_value = 7;
+		float high_value = 8;
+		int32 num_bits = 9;
+	}
+
+	bool is_end = 1;
+	string net_table_name = 2;
+	bool needs_decoder = 3;
+	repeated sendprop_t props = 4;
+}
+
+message CSVCMsg_ClassInfo {
+	message class_t {
+		int32 class_id = 1;
+		string data_table_name = 2;
+		string class_name = 3;
+	}
+
+	bool create_on_client = 1;
+	repeated class_t classes = 2;
+}
+
 message CSVCMsg_ServerInfo {
 	int32 protocol = 1;
 	int32 server_count = 2;
@@ -171,6 +216,64 @@ message CSVCMsg_ServerInfo {
 	string addon_name = 18;
 }
 
+message CSVCMsg_CreateStringTable {
+	string name = 1;
+	int32 max_entries = 2;
+	int32 num_entries = 3;
+	bool user_data_fixed_size = 4;
+	int32 user_data_size = 5;
+	int32 user_data_size_bits = 6;
+	int32 flags = 7;
+	bytes string_data = 8;
+}
+
+message CSVCMsg_UpdateStringTable {
+	int32 table_id = 1;
+	int32 num_changed_entries = 2;
+	bytes string_data = 3;
+}
+
+message CSVCMsg_VoiceInit {
+	int32 quality = 1;
+	string codec = 2;
+	int32 version = 3;
+}
+
+message CSVCMsg_VoiceData {
+	int32 client = 1;
+	bool proximity = 2;
+	fixed64 xuid = 3;
+	int32 audible_mask = 4;
+	bytes voice_data = 5;
+	VoiceDataFormat_t format = 6;
+}
+
+message CSVCMsg_SetView {
+	int32 entity_index = 1;
+}
+
+message CSVCMsg_UserMessage {
+	int32 msg_type = 1;
+	bytes msg_data = 2;
+}
+
+message CSVCMsg_GameEvent {
+	message key_t {
+		int32 type = 1;
+		string val_string = 2;
+		float val_float = 3;
+		int32 val_long = 4;
+		int32 val_short = 5;
+		int32 val_byte = 6;
+		bool val_bool = 7;
+		uint64 val_uint64 = 8;
+	}
+
+	string event_name = 1;
+	int32 eventid = 2;
+	repeated key_t keys = 3;
+}
+
 message CSVCMsg_PacketEntities {
 	int32 max_entries = 1;
 	int32 updated_entries = 2;
@@ -182,13 +285,42 @@ message CSVCMsg_PacketEntities {
 	bool pending_full_frame = 8;
 }
 
-message CSVCMsg_ClassInfo {
-	message class_t {
-		int32 class_id = 1;
-		string data_table_name = 2;
-		string class_name = 3;
+message CSVCMsg_TempEntities {
+	bool reliable = 1;
+	int32 num_entries = 2;
+	bytes entity_data = 3;
+}
+
+message CSVCMsg_GameEventList {
+	message key_t {
+		int32 type = 1;
+		string name = 2;
 	}
 
-	bool create_on_client = 1;
-	repeated class_t classes = 2;
+	message descriptor_t {
+		int32 eventid = 1;
+		string name = 2;
+		repeated key_t keys = 3;
+	}
+
+	repeated descriptor_t descriptors = 1;
+}
+
+
+
+
+
+enum VoiceDataFormat_t {
+	VOICEDATA_FORMAT_STEAM = 0;
+	VOICEDATA_FORMAT_ENGINE = 1;
+}
+
+enum EDotaEntityMessages {
+	DOTA_UNIT_SPEECH = 0;
+	DOTA_UNIT_SPEECH_MUTE = 1;
+	DOTA_UNIT_ADD_GESTURE = 2;
+	DOTA_UNIT_REMOVE_GESTURE = 3;
+	DOTA_UNIT_REMOVE_ALL_GESTURES = 4;
+	DOTA_UNIT_FADE_GESTURE = 6;
+	DOTA_UNIT_SPEECH_CLIENTSIDE_RULES = 7;
 }

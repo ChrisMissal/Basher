@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 
 namespace Basher
 {
@@ -15,7 +16,10 @@ namespace Basher
         private readonly BlockingCollection<CDemoPacket> cDemoPackets = new BlockingCollection<CDemoPacket>();
         private readonly BlockingCollection<CDemoFileHeader> cDemoFileHeaders = new BlockingCollection<CDemoFileHeader>();
         private readonly BlockingCollection<CSVCMsg_ServerInfo> csvServerInfo = new BlockingCollection<CSVCMsg_ServerInfo>();
+        private readonly BlockingCollection<CDemoSendTables> cDemoSendTables = new BlockingCollection<CDemoSendTables>();
         private readonly BlockingCollection<CSVCMsg_PacketEntities> csvPacketEntities = new BlockingCollection<CSVCMsg_PacketEntities>();
+
+        private readonly BlockingCollection<IMessage> messages = new BlockingCollection<IMessage>();
 
         private readonly TaskFactory taskFactory;
         private List<Exception> exceptions = new List<Exception>();
@@ -50,25 +54,51 @@ namespace Basher
             this.csvPacketEntities.CompleteAdding();
         }
 
-        public void Collect(CDemoPacket message)
+        public void Collect(IMessage message)
+        {
+            this.messages.Add(message, this.cancellationToken);
+            this.taskFactory.StartNew(() =>
+            {
+                const ConsoleColor messageColor = ConsoleColor.Blue;
+                switch (message)
+                {
+                    case CDemoFileHeader header:
+                        message.Descriptor.ClrType.Dump(ConsoleColor.Cyan);
+                        header.Dump(messageColor, 1);
+                        break;
+                    case CDemoFileInfo info:
+                        message.Descriptor.ClrType.Dump(ConsoleColor.Cyan);
+                        info.Dump(messageColor, 1);
+                        break;
+                    case CDemoStop stop:
+                        message.Descriptor.ClrType.Dump(ConsoleColor.Cyan);
+                        stop.Dump(messageColor, 1);
+                        break;
+                    case CDemoPacket packet:
+                        message.Descriptor.ClrType.Dump(ConsoleColor.Cyan);
+                        packet.Dump(messageColor, 1);
+                        break;
+                    default:
+                        message.Dump(ConsoleColor.Cyan, 2);
+                        break;
+                }
+
+            }, this.cancellationToken);
+        }
+
+        /*public void Collect(CDemoPacket message)
         {
             this.cDemoPackets.Add(message.Dump(ConsoleColor.Green), this.cancellationToken);
-            this.taskFactory.StartNew(() => message.DeserializeAsync(serverInfo =>
+            this.taskFactory.StartNew(() => message.DeserializeAsync<IMessage>(msg =>
             {
-                //serverInfo.Dump(ConsoleColor.Cyan, 2);
-                this.csvServerInfo.Add(serverInfo, this.cancellationToken);
+                this.messages.Add(msg, this.cancellationToken);
             }), this.cancellationToken);
         }
 
         public void Collect(CDemoFileHeader message)
         {
-            this.cDemoFileHeaders.Add(message.Dump(ConsoleColor.Green), this.cancellationToken);
-        }
-
-        public void Collect(CSVCMsg_PacketEntities message)
-        {
-            this.csvPacketEntities.Add(message.Dump(ConsoleColor.Green), this.cancellationToken);
-        }
+            this.cDemoFileHeaders.Add(message.Dump(ConsoleColor.Magenta), this.cancellationToken);
+        }*/
 
         public void AddException(Exception exception)
         {
