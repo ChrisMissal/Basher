@@ -28,6 +28,42 @@ namespace Basher.Tests
             header.SummaryOffset.ShouldBe(this.replay.ExpectedSummaryOffset);
         }
 
+        [Fact]
+        public void Can_read_expected_MatchDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Can_read_expected_GameMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Can_read_expected_Duration()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Can_read_expected_DireKills()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Can_read_expected_RadiantKills()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Can_read_expected_Victor()
+        {
+            throw new NotImplementedException();
+        }
+
         private ReplayElement.HeaderElement ExecuteReadHeader()
         {
             var headerVisitor = new HeaderReader(stream);

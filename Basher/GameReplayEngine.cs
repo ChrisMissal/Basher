@@ -24,6 +24,10 @@ namespace Basher
         {
         }
 
+        internal GameReplayEngine(TextWriter writer) : base(writer)
+        {
+        }
+
         public GameReplayEngine(TextWriter writer, CancellationTokenSource cancellationTokenSource) : base(writer)
         {
             this.cancellationToken = cancellationTokenSource.Token;

@@ -19,5 +19,17 @@ namespace Basher.Tests.Scenarios
         public string FileName { get; }
 
         public ulong ExpectedSummaryOffset { get; protected set; }
+
+        public DateTimeOffset MatchDate { get; protected set; }
+
+        public string GameMode { get; protected set; }
+
+        public TimeSpan Duration { get; protected set; }
+
+        public int DireKills { get; protected set; }
+
+        public int RadiantKills { get; protected set; }
+
+        public string Victor { get; protected set; }
     }
 }
