@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using Basher.Tests.Scenarios;
 using Shouldly;
 using Xunit;
@@ -9,23 +10,25 @@ namespace Basher.Tests
     public abstract class LocalFileTestBase : IDisposable
     {
         private readonly ReplayTestBase replay;
-        protected readonly string fileName;
+        private readonly string fileName;
         private readonly FileStream stream;
+        private readonly ReplayFileEnumerator enumerator;
 
         protected LocalFileTestBase(ReplayTestBase replay)
         {
             this.replay = replay;
             this.fileName = replay.FileName;
             this.stream = new FileStream(this.fileName, FileMode.Open, FileAccess.Read);
+            this.enumerator = new ReplayFileEnumerator(stream);
         }
 
         [Fact]
         public void Can_read_expected_file_header()
         {
-            var header = this.ExecuteReadHeader();
+            var header = this.GetHeader();
 
             header.Found.ShouldBeTrue();
-            header.SummaryOffset.ShouldBe(this.replay.ExpectedSummaryOffset);
+            header.ServerName.ShouldBe(this.replay.ServerName);
         }
 
         [Fact]
@@ -64,19 +67,35 @@ namespace Basher.Tests
             throw new NotImplementedException();
         }
 
-        private ReplayElement.HeaderElement ExecuteReadHeader()
+        private Header GetHeader()
         {
-            var headerVisitor = new HeaderReader(stream);
+            var message = this.enumerator.First();
 
-            var gameReplay = new GameReplayEngine(Console.Out);
-            headerVisitor.Read(gameReplay);
+            if (message is CDemoFileHeader header)
+            {
+                return new Header(header);
+            }
 
-            return gameReplay.Header;
+            return null;
         }
 
         public void Dispose()
         {
             this.stream?.Dispose();
+        }
+
+        private class Header
+        {
+            private readonly CDemoFileHeader header;
+
+            public Header(CDemoFileHeader header)
+            {
+                this.header = header;
+            }
+
+            public bool Found => this.header != null;
+
+            public string ServerName => this.header.ServerName;
         }
     }
 }
