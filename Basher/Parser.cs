@@ -1,9 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using Jil;
 using System.Runtime.CompilerServices;
-using System.Threading;
+using Google.Protobuf;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("Basher.Tests")]
@@ -12,35 +10,20 @@ namespace Basher
 {
     public class Parser
     {
-        private readonly TextWriter writer;
+        private readonly ReplayFileEnumerator fileEnumerator;
 
-        public Parser(TextWriter writer = null)
+        public Parser(string path)
         {
-            this.writer = writer ?? TextWriter.Null;
+            var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            this.fileEnumerator = new ReplayFileEnumerator(fileStream);
         }
 
-        public Task ParseFromFileAsync(string path, CancellationToken cancellationToken)
+        public IEnumerable<IMessage> GetMessages()
         {
-            var cancellationSource = new CancellationTokenSource();
-            var engine = new GameReplayEngine(this.writer, cancellationSource);
-
-            using (var reader = new Dota2ReplayStreamReader(path, cancellationSource))
+            foreach (var message in this.fileEnumerator)
             {
-                try
-                {
-                    reader.ReadHeader(engine);
-                    reader.ReadGameReplay(engine);
-                }
-                catch (Exception exception)
-                {
-                    engine.AddException(exception);
-                    return Task.FromException(exception);
-                }
-
-                this.writer.WriteLine($"{JSON.Serialize(engine)}");
+                yield return message;
             }
-
-            return Task.CompletedTask;
         }
     }
 }

@@ -1,65 +1,40 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Basher;
 
 namespace Client
 {
     class Program
     {
-        static readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-
         static void Main(string[] args)
         {
             var path = args.Any() ? args[0] : @"C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays\" +
-                                              "4757318890.dem";
-                                              //"4984038549.dem";
-
-            var cancellationToken = cancellationTokenSource.Token;
-
-            var cancelTask = Task.Factory.StartNew(() => {
-                if (Console.ReadKey().Key == ConsoleKey.Escape) cancellationTokenSource.Cancel(true);
-            }, cancellationToken);
+                                              //"4757318890.dem";
+                                              "4984038549.dem";
 
             var shortFileName = path.Split('\\').Last();
             Console.WriteLine($"Beginning to parse \"{shortFileName}\"");
 
-            var parser = new Parser();
-            var parseTask = parser.ParseFromFileAsync(path, cancellationToken);
+            try
+            {
+                var stopwatch = Stopwatch.StartNew();
+                var parser = new Parser(path);
 
-            Task.WhenAny(cancelTask, parseTask).ConfigureAwait(true).GetAwaiter().GetResult();
+                foreach (var message in parser.GetMessages())
+                {
+                    Console.WriteLine(message);
+                }
 
-            if (cancelTask.IsCanceled)
-            {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Parse cancelled'");
-                Console.ResetColor();
+                stopwatch.Stop();
+
+                Console.WriteLine($"Parsing finished in {stopwatch.Elapsed:g}");
             }
-            else if (parseTask.IsFaulted)
+            catch (Exception exception)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(parseTask.Exception.Flatten());
-                Console.ResetColor();
+                Console.WriteLine(exception);
             }
-            else if (parseTask.IsCompleted && !parseTask.IsCompletedSuccessfully)
-            {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Unknown error? :(");
-                Console.WriteLine("==============");
-                Console.WriteLine(parseTask.Exception.Flatten());
-                Console.ResetColor();
-            }
-            else if (parseTask.IsCompletedSuccessfully)
-            {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Complete");
-                Console.ResetColor();
-            }
-            
+
 #if DEBUG
             Console.ReadLine();
 #endif
