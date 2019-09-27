@@ -137,41 +137,41 @@ public static partial class DemoReflection {
           "QgOAAQBiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::EDemoCommands), typeof(global::VoiceDataFormat_t), typeof(global::EDotaEntityMessages), }, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFileHeader), global::CDemoFileHeader.Parser, new[]{ "DemoFileStamp", "NetworkProtocol", "ServerName", "ClientName", "MapName", "GameDirectory", "FullpacketsVersion", "AllowClientsideEntities", "AllowClientsideParticles", "Addons" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo), global::CGameInfo.Parser, new[]{ "Dota" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo), global::CGameInfo.Types.CDotaGameInfo.Parser, new[]{ "MatchId", "GameMode", "GameWinner", "PlayerInfo", "Leagueid", "PicksBans", "RadiantTeamId", "DireTeamId", "RadiantTeamTag", "DireTeamTag", "EndTime" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo.Types.CPlayerInfo), global::CGameInfo.Types.CDotaGameInfo.Types.CPlayerInfo.Parser, new[]{ "HeroName", "PlayerName", "IsFakeClient", "Steamid", "GameTeam" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo.Types.CHeroSelectEvent), global::CGameInfo.Types.CDotaGameInfo.Types.CHeroSelectEvent.Parser, new[]{ "IsPick", "Team", "HeroId" }, null, null, null, null)})}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFileInfo), global::CDemoFileInfo.Parser, new[]{ "PlaybackTime", "PlaybackTicks", "PlaybackFrames", "GameInfo" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoPacket), global::CDemoPacket.Parser, new[]{ "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFullPacket), global::CDemoFullPacket.Parser, new[]{ "StringTable", "Packet" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSaveGame), global::CDemoSaveGame.Parser, new[]{ "Data", "SteamId", "Signature", "Version" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSyncTick), global::CDemoSyncTick.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoConsoleCmd), global::CDemoConsoleCmd.Parser, new[]{ "Cmdstring" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSendTables), global::CDemoSendTables.Parser, new[]{ "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoClassInfo), global::CDemoClassInfo.Parser, new[]{ "Classes" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CDemoClassInfo.Types.class_t), global::CDemoClassInfo.Types.class_t.Parser, new[]{ "ClassId", "NetworkName", "TableName" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoCustomData), global::CDemoCustomData.Parser, new[]{ "CallbackIndex", "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoCustomDataCallbacks), global::CDemoCustomDataCallbacks.Parser, new[]{ "SaveId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables), global::CDemoStringTables.Parser, new[]{ "Tables" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables.Types.items_t), global::CDemoStringTables.Types.items_t.Parser, new[]{ "Str", "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables.Types.table_t), global::CDemoStringTables.Types.table_t.Parser, new[]{ "TableName", "Items", "ItemsClientside", "TableFlags" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStop), global::CDemoStop.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoUserCmd), global::CDemoUserCmd.Parser, new[]{ "CmdNumber", "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSpawnGroups), global::CDemoSpawnGroups.Parser, new[]{ "Msgs" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CNETMsg_Tick), global::CNETMsg_Tick.Parser, new[]{ "Tick", "HostComputationtime", "HostComputationtimeStdDeviation", "HostFramestarttimeStdDeviation" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CNETMsg_SignonState), global::CNETMsg_SignonState.Parser, new[]{ "SignonState", "SpawnCount", "NumServerPlayers", "PlayersNetworkids", "MapName" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SendTable), global::CSVCMsg_SendTable.Parser, new[]{ "IsEnd", "NetTableName", "NeedsDecoder", "Props" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SendTable.Types.sendprop_t), global::CSVCMsg_SendTable.Types.sendprop_t.Parser, new[]{ "Type", "VarName", "Flags", "Priority", "DtName", "NumElements", "LowValue", "HighValue", "NumBits" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ClassInfo), global::CSVCMsg_ClassInfo.Parser, new[]{ "CreateOnClient", "Classes" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ClassInfo.Types.class_t), global::CSVCMsg_ClassInfo.Types.class_t.Parser, new[]{ "ClassId", "DataTableName", "ClassName" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ServerInfo), global::CSVCMsg_ServerInfo.Parser, new[]{ "Protocol", "ServerCount", "IsDedicated", "IsHltv", "IsReplay", "COs", "MapCrc", "ClientCrc", "StringTableCrc", "MaxClients", "MaxClasses", "PlayerSlot", "TickInterval", "GameDir", "MapName", "SkyName", "HostName", "AddonName" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_CreateStringTable), global::CSVCMsg_CreateStringTable.Parser, new[]{ "Name", "MaxEntries", "NumEntries", "UserDataFixedSize", "UserDataSize", "UserDataSizeBits", "Flags", "StringData" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_UpdateStringTable), global::CSVCMsg_UpdateStringTable.Parser, new[]{ "TableId", "NumChangedEntries", "StringData" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_VoiceInit), global::CSVCMsg_VoiceInit.Parser, new[]{ "Quality", "Codec", "Version" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_VoiceData), global::CSVCMsg_VoiceData.Parser, new[]{ "Client", "Proximity", "Xuid", "AudibleMask", "VoiceData", "Format" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SetView), global::CSVCMsg_SetView.Parser, new[]{ "EntityIndex" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_UserMessage), global::CSVCMsg_UserMessage.Parser, new[]{ "MsgType", "MsgData" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEvent), global::CSVCMsg_GameEvent.Parser, new[]{ "EventName", "Eventid", "Keys" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEvent.Types.key_t), global::CSVCMsg_GameEvent.Types.key_t.Parser, new[]{ "Type", "ValString", "ValFloat", "ValLong", "ValShort", "ValByte", "ValBool", "ValUint64" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_PacketEntities), global::CSVCMsg_PacketEntities.Parser, new[]{ "MaxEntries", "UpdatedEntries", "IsDelta", "UpdateBaseline", "Baseline", "DeltaFrom", "EntityData", "PendingFullFrame" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_TempEntities), global::CSVCMsg_TempEntities.Parser, new[]{ "Reliable", "NumEntries", "EntityData" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList), global::CSVCMsg_GameEventList.Parser, new[]{ "Descriptors" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList.Types.key_t), global::CSVCMsg_GameEventList.Types.key_t.Parser, new[]{ "Type", "Name" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList.Types.descriptor_t), global::CSVCMsg_GameEventList.Types.descriptor_t.Parser, new[]{ "Eventid", "Name", "Keys" }, null, null, null, null)})
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::EDemoCommands), typeof(global::VoiceDataFormat_t), typeof(global::EDotaEntityMessages), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFileHeader), global::CDemoFileHeader.Parser, new[]{ "DemoFileStamp", "NetworkProtocol", "ServerName", "ClientName", "MapName", "GameDirectory", "FullpacketsVersion", "AllowClientsideEntities", "AllowClientsideParticles", "Addons" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo), global::CGameInfo.Parser, new[]{ "Dota" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo), global::CGameInfo.Types.CDotaGameInfo.Parser, new[]{ "MatchId", "GameMode", "GameWinner", "PlayerInfo", "Leagueid", "PicksBans", "RadiantTeamId", "DireTeamId", "RadiantTeamTag", "DireTeamTag", "EndTime" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo.Types.CPlayerInfo), global::CGameInfo.Types.CDotaGameInfo.Types.CPlayerInfo.Parser, new[]{ "HeroName", "PlayerName", "IsFakeClient", "Steamid", "GameTeam" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CGameInfo.Types.CDotaGameInfo.Types.CHeroSelectEvent), global::CGameInfo.Types.CDotaGameInfo.Types.CHeroSelectEvent.Parser, new[]{ "IsPick", "Team", "HeroId" }, null, null, null)})}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFileInfo), global::CDemoFileInfo.Parser, new[]{ "PlaybackTime", "PlaybackTicks", "PlaybackFrames", "GameInfo" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoPacket), global::CDemoPacket.Parser, new[]{ "Data" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoFullPacket), global::CDemoFullPacket.Parser, new[]{ "StringTable", "Packet" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSaveGame), global::CDemoSaveGame.Parser, new[]{ "Data", "SteamId", "Signature", "Version" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSyncTick), global::CDemoSyncTick.Parser, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoConsoleCmd), global::CDemoConsoleCmd.Parser, new[]{ "Cmdstring" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSendTables), global::CDemoSendTables.Parser, new[]{ "Data" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoClassInfo), global::CDemoClassInfo.Parser, new[]{ "Classes" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CDemoClassInfo.Types.class_t), global::CDemoClassInfo.Types.class_t.Parser, new[]{ "ClassId", "NetworkName", "TableName" }, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoCustomData), global::CDemoCustomData.Parser, new[]{ "CallbackIndex", "Data" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoCustomDataCallbacks), global::CDemoCustomDataCallbacks.Parser, new[]{ "SaveId" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables), global::CDemoStringTables.Parser, new[]{ "Tables" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables.Types.items_t), global::CDemoStringTables.Types.items_t.Parser, new[]{ "Str", "Data" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStringTables.Types.table_t), global::CDemoStringTables.Types.table_t.Parser, new[]{ "TableName", "Items", "ItemsClientside", "TableFlags" }, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoStop), global::CDemoStop.Parser, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoUserCmd), global::CDemoUserCmd.Parser, new[]{ "CmdNumber", "Data" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CDemoSpawnGroups), global::CDemoSpawnGroups.Parser, new[]{ "Msgs" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CNETMsg_Tick), global::CNETMsg_Tick.Parser, new[]{ "Tick", "HostComputationtime", "HostComputationtimeStdDeviation", "HostFramestarttimeStdDeviation" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CNETMsg_SignonState), global::CNETMsg_SignonState.Parser, new[]{ "SignonState", "SpawnCount", "NumServerPlayers", "PlayersNetworkids", "MapName" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SendTable), global::CSVCMsg_SendTable.Parser, new[]{ "IsEnd", "NetTableName", "NeedsDecoder", "Props" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SendTable.Types.sendprop_t), global::CSVCMsg_SendTable.Types.sendprop_t.Parser, new[]{ "Type", "VarName", "Flags", "Priority", "DtName", "NumElements", "LowValue", "HighValue", "NumBits" }, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ClassInfo), global::CSVCMsg_ClassInfo.Parser, new[]{ "CreateOnClient", "Classes" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ClassInfo.Types.class_t), global::CSVCMsg_ClassInfo.Types.class_t.Parser, new[]{ "ClassId", "DataTableName", "ClassName" }, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_ServerInfo), global::CSVCMsg_ServerInfo.Parser, new[]{ "Protocol", "ServerCount", "IsDedicated", "IsHltv", "IsReplay", "COs", "MapCrc", "ClientCrc", "StringTableCrc", "MaxClients", "MaxClasses", "PlayerSlot", "TickInterval", "GameDir", "MapName", "SkyName", "HostName", "AddonName" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_CreateStringTable), global::CSVCMsg_CreateStringTable.Parser, new[]{ "Name", "MaxEntries", "NumEntries", "UserDataFixedSize", "UserDataSize", "UserDataSizeBits", "Flags", "StringData" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_UpdateStringTable), global::CSVCMsg_UpdateStringTable.Parser, new[]{ "TableId", "NumChangedEntries", "StringData" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_VoiceInit), global::CSVCMsg_VoiceInit.Parser, new[]{ "Quality", "Codec", "Version" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_VoiceData), global::CSVCMsg_VoiceData.Parser, new[]{ "Client", "Proximity", "Xuid", "AudibleMask", "VoiceData", "Format" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_SetView), global::CSVCMsg_SetView.Parser, new[]{ "EntityIndex" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_UserMessage), global::CSVCMsg_UserMessage.Parser, new[]{ "MsgType", "MsgData" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEvent), global::CSVCMsg_GameEvent.Parser, new[]{ "EventName", "Eventid", "Keys" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEvent.Types.key_t), global::CSVCMsg_GameEvent.Types.key_t.Parser, new[]{ "Type", "ValString", "ValFloat", "ValLong", "ValShort", "ValByte", "ValBool", "ValUint64" }, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_PacketEntities), global::CSVCMsg_PacketEntities.Parser, new[]{ "MaxEntries", "UpdatedEntries", "IsDelta", "UpdateBaseline", "Baseline", "DeltaFrom", "EntityData", "PendingFullFrame" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_TempEntities), global::CSVCMsg_TempEntities.Parser, new[]{ "Reliable", "NumEntries", "EntityData" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList), global::CSVCMsg_GameEventList.Parser, new[]{ "Descriptors" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList.Types.key_t), global::CSVCMsg_GameEventList.Types.key_t.Parser, new[]{ "Type", "Name" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CSVCMsg_GameEventList.Types.descriptor_t), global::CSVCMsg_GameEventList.Types.descriptor_t.Parser, new[]{ "Eventid", "Name", "Keys" }, null, null, null)})
         }));
   }
   #endregion
@@ -708,7 +708,7 @@ public sealed partial class CGameInfo : pb::IMessage<CGameInfo> {
     }
     if (other.dota_ != null) {
       if (dota_ == null) {
-        Dota = new global::CGameInfo.Types.CDotaGameInfo();
+        dota_ = new global::CGameInfo.Types.CDotaGameInfo();
       }
       Dota.MergeFrom(other.Dota);
     }
@@ -725,9 +725,9 @@ public sealed partial class CGameInfo : pb::IMessage<CGameInfo> {
           break;
         case 34: {
           if (dota_ == null) {
-            Dota = new global::CGameInfo.Types.CDotaGameInfo();
+            dota_ = new global::CGameInfo.Types.CDotaGameInfo();
           }
-          input.ReadMessage(Dota);
+          input.ReadMessage(dota_);
           break;
         }
       }
@@ -1748,7 +1748,7 @@ public sealed partial class CDemoFileInfo : pb::IMessage<CDemoFileInfo> {
     }
     if (other.gameInfo_ != null) {
       if (gameInfo_ == null) {
-        GameInfo = new global::CGameInfo();
+        gameInfo_ = new global::CGameInfo();
       }
       GameInfo.MergeFrom(other.GameInfo);
     }
@@ -1777,9 +1777,9 @@ public sealed partial class CDemoFileInfo : pb::IMessage<CDemoFileInfo> {
         }
         case 34: {
           if (gameInfo_ == null) {
-            GameInfo = new global::CGameInfo();
+            gameInfo_ = new global::CGameInfo();
           }
-          input.ReadMessage(GameInfo);
+          input.ReadMessage(gameInfo_);
           break;
         }
       }
@@ -2045,13 +2045,13 @@ public sealed partial class CDemoFullPacket : pb::IMessage<CDemoFullPacket> {
     }
     if (other.stringTable_ != null) {
       if (stringTable_ == null) {
-        StringTable = new global::CDemoStringTables();
+        stringTable_ = new global::CDemoStringTables();
       }
       StringTable.MergeFrom(other.StringTable);
     }
     if (other.packet_ != null) {
       if (packet_ == null) {
-        Packet = new global::CDemoPacket();
+        packet_ = new global::CDemoPacket();
       }
       Packet.MergeFrom(other.Packet);
     }
@@ -2068,16 +2068,16 @@ public sealed partial class CDemoFullPacket : pb::IMessage<CDemoFullPacket> {
           break;
         case 10: {
           if (stringTable_ == null) {
-            StringTable = new global::CDemoStringTables();
+            stringTable_ = new global::CDemoStringTables();
           }
-          input.ReadMessage(StringTable);
+          input.ReadMessage(stringTable_);
           break;
         }
         case 18: {
           if (packet_ == null) {
-            Packet = new global::CDemoPacket();
+            packet_ = new global::CDemoPacket();
           }
-          input.ReadMessage(Packet);
+          input.ReadMessage(packet_);
           break;
         }
       }
@@ -6858,7 +6858,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
 
   /// <summary>Field number for the "format" field.</summary>
   public const int FormatFieldNumber = 6;
-  private global::VoiceDataFormat_t format_ = global::VoiceDataFormat_t.VoicedataFormatSteam;
+  private global::VoiceDataFormat_t format_ = 0;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public global::VoiceDataFormat_t Format {
     get { return format_; }
@@ -6897,7 +6897,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
     if (Xuid != 0UL) hash ^= Xuid.GetHashCode();
     if (AudibleMask != 0) hash ^= AudibleMask.GetHashCode();
     if (VoiceData.Length != 0) hash ^= VoiceData.GetHashCode();
-    if (Format != global::VoiceDataFormat_t.VoicedataFormatSteam) hash ^= Format.GetHashCode();
+    if (Format != 0) hash ^= Format.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -6931,7 +6931,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
       output.WriteRawTag(42);
       output.WriteBytes(VoiceData);
     }
-    if (Format != global::VoiceDataFormat_t.VoicedataFormatSteam) {
+    if (Format != 0) {
       output.WriteRawTag(48);
       output.WriteEnum((int) Format);
     }
@@ -6958,7 +6958,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
     if (VoiceData.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeBytesSize(VoiceData);
     }
-    if (Format != global::VoiceDataFormat_t.VoicedataFormatSteam) {
+    if (Format != 0) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Format);
     }
     if (_unknownFields != null) {
@@ -6987,7 +6987,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
     if (other.VoiceData.Length != 0) {
       VoiceData = other.VoiceData;
     }
-    if (other.Format != global::VoiceDataFormat_t.VoicedataFormatSteam) {
+    if (other.Format != 0) {
       Format = other.Format;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -7022,7 +7022,7 @@ public sealed partial class CSVCMsg_VoiceData : pb::IMessage<CSVCMsg_VoiceData> 
           break;
         }
         case 48: {
-          Format = (global::VoiceDataFormat_t) input.ReadEnum();
+          format_ = (global::VoiceDataFormat_t) input.ReadEnum();
           break;
         }
       }
