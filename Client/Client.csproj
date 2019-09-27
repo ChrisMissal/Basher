@@ -6,8 +6,13 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn>1701;1702</NoWarn>
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Basher\Basher.csproj" />
+    <ProjectReference Include="..\Splitshot\Splitshot.csproj" />
   </ItemGroup>
 
 </Project>

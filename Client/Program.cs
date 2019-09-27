@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using Basher;
+using Splitshot;
 
 namespace Client
 {
@@ -10,8 +10,8 @@ namespace Client
         static void Main(string[] args)
         {
             var path = args.Any() ? args[0] : @"C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays\" +
-                                              //"4757318890.dem";
-                                              "4984038549.dem";
+                                              "4757318890.dem";
+                                              //"4984038549.dem";
 
             var shortFileName = path.Split('\\').Last();
             Console.WriteLine($"Beginning to parse \"{shortFileName}\"");
@@ -19,15 +19,10 @@ namespace Client
             try
             {
                 var stopwatch = Stopwatch.StartNew();
-                var parser = new Parser(path);
-
-                foreach (var message in parser.GetMessages())
-                {
-                    Console.WriteLine(message);
-                }
-
+                new Runner(path).Run();
                 stopwatch.Stop();
 
+                Console.WriteLine();
                 Console.WriteLine($"Parsing finished in {stopwatch.Elapsed:g}");
             }
             catch (Exception exception)

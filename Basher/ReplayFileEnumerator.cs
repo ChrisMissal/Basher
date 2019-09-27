@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Dota;
+using Basher.Enumerations;
 using Google.Protobuf;
 using Snappy;
 
@@ -50,7 +50,7 @@ namespace Basher
             var buffer = new byte[size];
             this.stream.Read(buffer, 0, buffer.Length);
 
-            var summaryComplete = this.stream.Position >= (long) this.summaryOffset;
+            var summaryComplete = this.stream.Position >= this.stream.Length;
 
             this.Current = !summaryComplete ? GetMessage(buffer) : null;
 

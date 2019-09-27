@@ -2,14 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace />
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.9.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Compiled\" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="protoc --csharp_out=./ demo.proto" />
+    <Exec Command="protoc --proto_path=./proto --csharp_out=./Compiled demo.proto dota_clientmessages.proto dota_commonmessages.proto dota_shared_enums.proto networkbasetypes.proto" />
   </Target>
 
 </Project>

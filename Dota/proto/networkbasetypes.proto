@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+option cc_generic_services = false;
+
+enum NET_Messages {
+	net_NOP = 0;
+	net_Disconnect = 1;
+	net_SplitScreenUser = 3;
+	net_Tick = 4;
+	net_StringCmd = 5;
+	net_SetConVar = 6;
+	net_SignonState = 7;
+	net_SpawnGroup_Load = 8;
+	net_SpawnGroup_ManifestUpdate = 9;
+	net_SpawnGroup_SetCreationTick = 11;
+	net_SpawnGroup_Unload = 12;
+	net_SpawnGroup_LoadCompleted = 13;
+}
+
+enum SpawnGroupFlags_t {
+	SPAWN_GROUP_Nil = 0;
+	SPAWN_GROUP_LOAD_ENTITIES_FROM_SAVE = 1;
+	SPAWN_GROUP_DONT_SPAWN_ENTITIES = 2;
+	SPAWN_GROUP_SYNCHRONOUS_SPAWN = 4;
+	SPAWN_GROUP_IS_INITIAL_SPAWN_GROUP = 8;
+	SPAWN_GROUP_CREATE_CLIENT_ONLY_ENTITIES = 16;
+	SPAWN_GROUP_BLOCK_UNTIL_LOADED = 64;
+	SPAWN_GROUP_LOAD_STREAMING_DATA = 128;
+	SPAWN_GROUP_CREATE_NEW_SCENE_WORLD = 256;
+}
+
+message CMsgVector {
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+
+message CMsgVector2D {
+	float x = 1;
+	float y = 2;
+}
+
+message CMsgQAngle {
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+
+message CMsgRGBA {
+	int32 r = 1;
+	int32 g = 2;
+	int32 b = 3;
+	int32 a = 4;
+}
+
+message CMsgPlayerInfo {
+	string name = 1;
+	fixed64 xuid = 2;
+	int32 userid = 3;
+	fixed64 steamid = 4;
+	bool fakeplayer = 5;
+	bool ishltv = 6;
+}
+
+message CEntityMsg {
+	uint32 target_entity = 1;
+}
+
+message CMsg_CVars {
+	message CVar {
+		string name = 1;
+		string value = 2;
+	}
+
+	repeated .CMsg_CVars.CVar cvars = 1;
+}
+
+message CNETMsg_NOP {
+}
+
+message CNETMsg_SplitScreenUser {
+	int32 slot = 1;
+}
+
+//message CNETMsg_Disconnect {
+//	.ENetworkDisconnectionReason reason = 2 [default = NETWORK_DISCONNECT_INVALID];
+//}
+
+message CNETMsg_Tick {
+	uint32 tick = 1;
+	uint32 host_frametime = 2;
+	uint32 host_frametime_std_deviation = 3;
+	uint32 host_computationtime = 4;
+	uint32 host_computationtime_std_deviation = 5;
+	uint32 host_framestarttime_std_deviation = 6;
+	uint32 host_loss = 7;
+}
+
+message CNETMsg_StringCmd {
+	string command = 1;
+}
+
+message CNETMsg_SetConVar {
+	.CMsg_CVars convars = 1;
+}
+
+message CNETMsg_SignonState {
+	uint32 signon_state = 1;
+	uint32 spawn_count = 2;
+	uint32 num_server_players = 3;
+	repeated string players_networkids = 4;
+	string map_name = 5;
+	string addons = 6;
+}
+
+message CSVCMsg_GameEvent {
+	message key_t {
+		int32 type = 1;
+		string val_string = 2;
+		float val_float = 3;
+		int32 val_long = 4;
+		int32 val_short = 5;
+		int32 val_byte = 6;
+		bool val_bool = 7;
+		uint64 val_uint64 = 8;
+	}
+
+	string event_name = 1;
+	int32 eventid = 2;
+	repeated .CSVCMsg_GameEvent.key_t keys = 3;
+}
+
+message CSVCMsgList_GameEvents {
+	message event_t {
+		int32 tick = 1;
+		.CSVCMsg_GameEvent event = 2;
+	}
+
+	repeated .CSVCMsgList_GameEvents.event_t events = 1;
+}
+
+message CSVCMsg_UserMessage {
+	int32 msg_type = 1;
+	bytes msg_data = 2;
+}
+
+message CSVCMsgList_UserMessages {
+	message usermsg_t {
+		int32 tick = 1;
+		.CSVCMsg_UserMessage msg = 2;
+	}
+
+	repeated .CSVCMsgList_UserMessages.usermsg_t usermsgs = 1;
+}
+
+message CNETMsg_SpawnGroup_Load {
+	string worldname = 1;
+	string entitylumpname = 2;
+	string entityfiltername = 3;
+	uint32 spawngrouphandle = 4;
+	uint32 spawngroupownerhandle = 5;
+	.CMsgVector world_offset_pos = 6;
+	.CMsgQAngle world_offset_angle = 7;
+	bytes spawngroupmanifest = 8;
+	uint32 flags = 9;
+	int32 tickcount = 10;
+	bool manifestincomplete = 11;
+	string localnamefixup = 12;
+	string parentnamefixup = 13;
+	int32 manifestloadpriority = 14;
+	uint32 worldgroupid = 15;
+	uint32 creationsequence = 16;
+	string savegamefilename = 17;
+	uint32 spawngroupparenthandle = 18;
+}
+
+message CNETMsg_SpawnGroup_ManifestUpdate {
+	uint32 spawngrouphandle = 1;
+	bytes spawngroupmanifest = 2;
+	bool manifestincomplete = 3;
+}
+
+message CNETMsg_SpawnGroup_SetCreationTick {
+	uint32 spawngrouphandle = 1;
+	int32 tickcount = 2;
+	uint32 creationsequence = 3;
+}
+
+message CNETMsg_SpawnGroup_Unload {
+	uint32 spawngrouphandle = 1;
+	uint32 flags = 2;
+	int32 tickcount = 3;
+}
+
+message CNETMsg_SpawnGroup_LoadCompleted {
+	uint32 spawngrouphandle = 1;
+}
+
+message CSVCMsg_GameSessionConfiguration {
+	bool is_multiplayer = 1;
+	bool is_loadsavegame = 2;
+	bool is_background_map = 3;
+	bool is_headless = 4;
+	uint32 min_client_limit = 5;
+	uint32 max_client_limit = 6;
+	uint32 max_clients = 7;
+	fixed32 tick_interval = 8;
+	string hostname = 9;
+	string savegamename = 10;
+	string s1_mapname = 11;
+	string gamemode = 12;
+	string server_ip_address = 13;
+	bytes data = 14;
+	bool is_localonly = 15;
+	bool no_steam_server = 19;
+	bool is_transition = 16;
+	string previouslevel = 17;
+	string landmarkname = 18;
+}
+

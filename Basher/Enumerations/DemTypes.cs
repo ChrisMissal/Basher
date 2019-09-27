@@ -1,7 +1,8 @@
-﻿using Google.Protobuf.Reflection;
+﻿using Google.Protobuf;
+using Google.Protobuf.Reflection;
 using Headspring;
 
-namespace Dota
+namespace Basher.Enumerations
 {
     internal class DemTypes : Enumeration<DemTypes, ulong>
     {
@@ -20,8 +21,7 @@ namespace Dota
         public static DemTypes CDemoUserCmd = new DemTypes(EDemoCommands.DemUserCmd, global::CDemoUserCmd.Descriptor);
         public static DemTypes CDemoFullPacket = new DemTypes(EDemoCommands.DemFullPacket, global::CDemoFullPacket.Descriptor);
         public static DemTypes CDemoSaveGame = new DemTypes(EDemoCommands.DemSaveGame, global::CDemoSaveGame.Descriptor);
-
-        //$(SolutionDir)tools/protoc.exe -I=$(ProjectDir)proto/ --csharp_out=$(ProjectDir)Model/ $(ProjectDir)proto/demo.proto
+        public static DemTypes CDemoSpawnGroups = new DemTypes(EDemoCommands.DemSpawnGroups, global::CDemoSaveGame.Descriptor);
 
         private DemTypes(EDemoCommands value, MessageDescriptor descriptor) : base((ulong) value, descriptor.Name)
         {
@@ -29,5 +29,13 @@ namespace Dota
         }
 
         public MessageDescriptor Descriptor { get; }
+
+        public T Read<T>(CodedInputStream codedInputStream)
+        {
+            var message = this.Descriptor.Parser.ParseFrom(codedInputStream);
+            message.MergeFrom(codedInputStream);
+
+            return (T) message;
+        }
     }
 }

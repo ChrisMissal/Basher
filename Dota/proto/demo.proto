@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+option cc_generic_services = false;
+
+enum EDemoCommands {
+	//DEM_Error = -1;
+	DEM_Stop = 0;
+	DEM_FileHeader = 1;
+	DEM_FileInfo = 2;
+	DEM_SyncTick = 3;
+	DEM_SendTables = 4;
+	DEM_ClassInfo = 5;
+	DEM_StringTables = 6;
+	DEM_Packet = 7;
+	DEM_SignonPacket = 8;
+	DEM_ConsoleCmd = 9;
+	DEM_CustomData = 10;
+	DEM_CustomDataCallbacks = 11;
+	DEM_UserCmd = 12;
+	DEM_FullPacket = 13;
+	DEM_SaveGame = 14;
+	DEM_SpawnGroups = 15;
+	DEM_Max = 16;
+	DEM_IsCompressed = 64;
+}
+
+message CDemoFileHeader {
+	string demo_file_stamp = 1;
+	int32 network_protocol = 2;
+	string server_name = 3;
+	string client_name = 4;
+	string map_name = 5;
+	string game_directory = 6;
+	int32 fullpackets_version = 7;
+	bool allow_clientside_entities = 8;
+	bool allow_clientside_particles = 9;
+	string addons = 10;
+}
+
+message CGameInfo {
+	message CDotaGameInfo {
+		message CPlayerInfo {
+			string hero_name = 1;
+			string player_name = 2;
+			bool is_fake_client = 3;
+			uint64 steamid = 4;
+			int32 game_team = 5;
+		}
+
+		message CHeroSelectEvent {
+			bool is_pick = 1;
+			uint32 team = 2;
+			uint32 hero_id = 3;
+		}
+
+		uint64 match_id = 1;
+		int32 game_mode = 2;
+		int32 game_winner = 3;
+		repeated .CGameInfo.CDotaGameInfo.CPlayerInfo player_info = 4;
+		uint32 leagueid = 5;
+		repeated .CGameInfo.CDotaGameInfo.CHeroSelectEvent picks_bans = 6;
+		uint32 radiant_team_id = 7;
+		uint32 dire_team_id = 8;
+		string radiant_team_tag = 9;
+		string dire_team_tag = 10;
+		uint32 end_time = 11;
+	}
+
+	.CGameInfo.CDotaGameInfo dota = 4;
+}
+
+message CDemoFileInfo {
+	float playback_time = 1;
+	int32 playback_ticks = 2;
+	int32 playback_frames = 3;
+	.CGameInfo game_info = 4;
+}
+
+message CDemoPacket {
+	bytes data = 3;
+}
+
+message CDemoFullPacket {
+	.CDemoStringTables string_table = 1;
+	.CDemoPacket packet = 2;
+}
+
+message CDemoSaveGame {
+	bytes data = 1;
+	fixed64 steam_id = 2;
+	fixed64 signature = 3;
+	int32 version = 4;
+}
+
+message CDemoSyncTick {
+}
+
+message CDemoConsoleCmd {
+	string cmdstring = 1;
+}
+
+message CDemoSendTables {
+	bytes data = 1;
+}
+
+message CDemoClassInfo {
+	message class_t {
+		int32 class_id = 1;
+		string network_name = 2;
+		string table_name = 3;
+	}
+
+	repeated .CDemoClassInfo.class_t classes = 1;
+}
+
+message CDemoCustomData {
+	int32 callback_index = 1;
+	bytes data = 2;
+}
+
+message CDemoCustomDataCallbacks {
+	repeated string save_id = 1;
+}
+
+message CDemoStringTables {
+	message items_t {
+		string str = 1;
+		bytes data = 2;
+	}
+
+	message table_t {
+		string table_name = 1;
+		repeated .CDemoStringTables.items_t items = 2;
+		repeated .CDemoStringTables.items_t items_clientside = 3;
+		int32 table_flags = 4;
+	}
+
+	repeated .CDemoStringTables.table_t tables = 1;
+}
+
+message CDemoStop {
+}
+
+message CDemoUserCmd {
+	int32 cmd_number = 1;
+	bytes data = 2;
+}
+
+message CDemoSpawnGroups {
+	repeated bytes msgs = 3;
+}

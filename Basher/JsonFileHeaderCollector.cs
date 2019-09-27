@@ -7,7 +7,7 @@ using Google.Protobuf;
 
 namespace Basher
 {
-    [Obsolete("I like this idea, but not sure yet how it will play out.")]
+    /*[Obsolete("I like this idea, but not sure yet how it will play out.")]
     public class JsonFileHeaderCollector : ICollector
     {
         private readonly BlockingCollection<string> collection = new BlockingCollection<string>();
@@ -35,5 +35,5 @@ namespace Basher
 
             return Task.FromException(exception);
         }
-    }
+    }*/
 }
