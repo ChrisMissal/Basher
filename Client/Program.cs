@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
-using Splitshot;
+using Basher;
 
 namespace Client
 {
@@ -19,7 +20,10 @@ namespace Client
             try
             {
                 var stopwatch = Stopwatch.StartNew();
-                new Runner(path).Run();
+
+                var runner = new Runner(path);
+                runner.Run();
+
                 stopwatch.Stop();
 
                 Console.WriteLine();

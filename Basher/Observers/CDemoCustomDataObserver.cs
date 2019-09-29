@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 using Basher.Enumerations;
 using Google.Protobuf;
@@ -8,41 +9,43 @@ namespace Basher.Observers
 {
     internal class CDemoCustomDataObserver : TypeObserver<CDemoFullPacket>
     {
-        private Task decodeTask;
+        private readonly BlockingCollection<CDemoFullPacket> collection;
+        private readonly BlockingCollection<CDemoCustomData> customData;
 
-        private readonly BlockingCollection<CDemoCustomData> collection;
-
-        public CDemoCustomDataObserver(BlockingCollection<CDemoCustomData> collection)
+        public CDemoCustomDataObserver(BlockingCollection<CDemoFullPacket> collection, BlockingCollection<CDemoCustomData> customData)
         {
             this.collection = collection;
+            this.customData = customData;
         }
 
         public override void OnCompleted()
         {
-            while (decodeTask == null || !decodeTask.IsCompleted)
+            while (this.Tasks.Any(x => !x.IsCompleted))
             {
-                collection.CompleteAdding();
+                this.collection.CompleteAdding();
             }
         }
 
-        public override void OnNext(IMessage<CDemoFullPacket> value)
+        protected override void Handle(PacketMessage message)
         {
-            if (!(value is CDemoFullPacket fullPacket))
-            {
-                throw new InvalidOperationException($"''{nameof(fullPacket)}' is null.");
-            }
+            var buffer = message.Inner.ToByteArray();
 
-            this.decodeTask = Task.Factory.StartNew(() =>
+            this.Tasks.Add(Task.Factory.StartNew(() =>
             {
-                var buffer = fullPacket.ToByteArray();
                 var inputStream = new CodedInputStream(buffer);
 
                 var tag = inputStream.PeekTag();
-                var dem = DemTypes.FromValue(tag);
-                var customData = dem.Read<CDemoCustomData>(inputStream);
 
-                this.collection.Add(customData);
-            });
+                var dem = DemTypes.FromValue(tag);
+                var packet = dem.Descriptor.Parser.ParseFrom(inputStream);
+                packet.MergeFrom(inputStream);
+
+                ($"__________________________________________________________________{Environment.NewLine}" +
+                 $"{message.Inner.GetType()} was tagged {message.Kind}->{tag} ({packet.ToByteArray().Length} bytes)").Dump(ConsoleColor.Cyan);
+
+                this.collection.Add(packet as CDemoFullPacket);
+                this.customData.Add(packet as CDemoCustomData);
+            }));
         }
     }
 }

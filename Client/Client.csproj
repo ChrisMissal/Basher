@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Splitshot\Splitshot.csproj" />
+    <ProjectReference Include="..\Basher\Basher.csproj" />
   </ItemGroup>
 
 </Project>

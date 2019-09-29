@@ -1,9 +1,8 @@
 ﻿using System;
-using Google.Protobuf;
 
 namespace Basher.Observers
 {
-    internal class FullPacketCountObserver : TypeObserver<CDemoFullPacket>
+    internal class CDemoFullPacketCountObserver : TypeObserver<CDemoFullPacket>
     {
         private int count;
 
@@ -14,7 +13,7 @@ namespace Basher.Observers
             Console.ResetColor();
         }
 
-        public override void OnNext(IMessage<CDemoFullPacket> value)
+        protected override void Handle(PacketMessage value)
         {
             this.count++;
         }

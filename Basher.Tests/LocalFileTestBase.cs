@@ -71,7 +71,7 @@ namespace Basher.Tests
         {
             var message = this.enumerator.First();
 
-            if (message is CDemoFileHeader header)
+            if (message?.Inner is CDemoFileHeader header)
             {
                 return new Header(header);
             }

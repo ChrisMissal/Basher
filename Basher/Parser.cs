@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Google.Protobuf;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("Basher.Tests")]
 #endif
 namespace Basher
 {
-    public class Parser
+    internal class Parser
     {
         private readonly ReplayFileEnumerator fileEnumerator;
 
@@ -18,7 +17,7 @@ namespace Basher
             this.fileEnumerator = new ReplayFileEnumerator(fileStream);
         }
 
-        internal IEnumerable<IMessage> GetMessages()
+        internal IEnumerable<PacketMessage> GetMessages()
         {
             foreach (var message in this.fileEnumerator)
             {

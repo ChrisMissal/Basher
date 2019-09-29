@@ -1,10 +1,13 @@
 ﻿using System;
-using Google.Protobuf;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Basher.Observers
 {
-    public abstract class TypeObserver<T> : IObserver<IMessage<T>> where T : IMessage<T>
+    internal abstract class TypeObserver<T> : IObserver<PacketMessage> where T : class
     {
+        protected List<Task> Tasks { get; } = new List<Task>();
+
         public abstract void OnCompleted();
 
         public void OnError(Exception error)
@@ -12,6 +15,16 @@ namespace Basher.Observers
             Console.WriteLine(error);
         }
 
-        public abstract void OnNext(IMessage<T> value);
+        public void OnNext(PacketMessage value)
+        {
+            if (!value.IsA<T>())
+            {
+                return;
+            }
+
+            this.Handle(value);
+        }
+
+        protected abstract void Handle(PacketMessage value);
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Concurrent;
-using Google.Protobuf;
 
 namespace Basher
 {
-    public interface ICollector<T> where T : IMessage<T>
+    public interface ICollector
     {
-        void Collect(BlockingCollection<T> inputCollection);
+        void Collect<T>(BlockingCollection<T> collection);
     }
 }

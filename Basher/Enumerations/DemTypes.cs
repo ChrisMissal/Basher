@@ -1,5 +1,4 @@
-﻿using Google.Protobuf;
-using Google.Protobuf.Reflection;
+﻿using Google.Protobuf.Reflection;
 using Headspring;
 
 namespace Basher.Enumerations
@@ -29,13 +28,5 @@ namespace Basher.Enumerations
         }
 
         public MessageDescriptor Descriptor { get; }
-
-        public T Read<T>(CodedInputStream codedInputStream)
-        {
-            var message = this.Descriptor.Parser.ParseFrom(codedInputStream);
-            message.MergeFrom(codedInputStream);
-
-            return (T) message;
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Basher.Enumerations;
@@ -7,7 +8,7 @@ using Snappy;
 
 namespace Basher
 {
-    internal class ReplayFileEnumerator : IEnumerator<IMessage>, IEnumerable<IMessage>
+    internal class ReplayFileEnumerator : IEnumerator<PacketMessage>, IEnumerable<PacketMessage>
     {
         private readonly Stream stream;
         private readonly HeaderReader headerReader = new HeaderReader();
@@ -39,7 +40,7 @@ namespace Basher
                 var header = DemTypes.FromValue(msg).Descriptor.Parser.ParseDelimitedFrom(this.stream);
                 header.MergeDelimitedFrom(this.stream);
 
-                this.Current = header;
+                this.Current = new PacketMessage(header, this.kind);
                 return this.Current != null;
             }
 
@@ -57,7 +58,7 @@ namespace Basher
             return !summaryComplete;
         }
 
-        private IMessage GetMessage(byte[] buffer)
+        private PacketMessage GetMessage(byte[] buffer)
         {
             if (this.IsCompressed)
             {
@@ -69,13 +70,13 @@ namespace Basher
 
                 message.MergeFrom(buffer);
 
-                return message;
+                return new PacketMessage(message, this.kind);
             }
             else
             {
                 var message = DemTypes.FromValue(kind).Descriptor.Parser.ParseFrom(buffer);
 
-                return message;
+                return new PacketMessage(message, this.kind);
             }
         }
 
@@ -93,23 +94,23 @@ namespace Basher
             this.stream.Position = 0L;
         }
 
-        public IMessage Current { get; private set; }
+        public PacketMessage Current { get; private set; }
 
-        object IEnumerator.Current => Current;
+        object IEnumerator.Current => this.Current;
 
         public void Dispose()
         {
             this.stream?.Dispose();
         }
 
-        public IEnumerator<IMessage> GetEnumerator()
+        public IEnumerator<PacketMessage> GetEnumerator()
         {
             return this;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 }

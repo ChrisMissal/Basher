@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Google.Protobuf;
 
 namespace Basher
 {
-    internal class MessageUnsubscriber<T> : IDisposable where T : IMessage<T>
+    internal class MessageUnsubscriber : IDisposable
     {
-        private readonly List<IObserver<T>> observers;
-        private readonly IObserver<T> observer;
+        private readonly List<IObserver<PacketMessage>> observers;
+        private readonly IObserver<PacketMessage> observer;
 
-        public MessageUnsubscriber(List<IObserver<T>> observers, IObserver<T> observer)
+        public MessageUnsubscriber(List<IObserver<PacketMessage>> observers, IObserver<PacketMessage> observer)
         {
             this.observers = observers.ToList();
             this.observer = observer;
