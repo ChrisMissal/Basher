@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using Basher;
+using System.Threading;
+using lib = Basher;
 
 namespace Client
 {
@@ -10,19 +11,15 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            var path = args.Any() ? args[0] : @"C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays\" +
-                                              "4757318890.dem";
-                                              //"4984038549.dem";
-
-            var shortFileName = path.Split('\\').Last();
-            Console.WriteLine($"Beginning to parse \"{shortFileName}\"");
-
             try
             {
                 var stopwatch = Stopwatch.StartNew();
 
-                var runner = new Runner(path);
-                runner.Run();
+                var runner = 
+                    //lib.Runner.FromLocalMatchNumber(args[0]);
+                    new lib.Runner(args[0]);
+
+                runner.RunAsync(CancellationToken.None).GetAwaiter().GetResult();
 
                 stopwatch.Stop();
 
@@ -31,6 +28,8 @@ namespace Client
             }
             catch (Exception exception)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
                 Console.WriteLine(exception);
             }
 

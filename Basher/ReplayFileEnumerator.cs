@@ -8,7 +8,7 @@ using Snappy;
 
 namespace Basher
 {
-    internal class ReplayFileEnumerator : IEnumerator<PacketMessage>, IEnumerable<PacketMessage>
+    internal class ReplayFileEnumerator : IEnumerator<Message>, IEnumerable<Message>
     {
         private readonly Stream stream;
         private readonly HeaderReader headerReader = new HeaderReader();
@@ -40,7 +40,7 @@ namespace Basher
                 var header = DemTypes.FromValue(msg).Descriptor.Parser.ParseDelimitedFrom(this.stream);
                 header.MergeDelimitedFrom(this.stream);
 
-                this.Current = new PacketMessage(header, this.kind);
+                this.Current = new Message(header, this.kind);
                 return this.Current != null;
             }
 
@@ -58,7 +58,7 @@ namespace Basher
             return !summaryComplete;
         }
 
-        private PacketMessage GetMessage(byte[] buffer)
+        private Message GetMessage(byte[] buffer)
         {
             if (this.IsCompressed)
             {
@@ -70,13 +70,13 @@ namespace Basher
 
                 message.MergeFrom(buffer);
 
-                return new PacketMessage(message, this.kind);
+                return new Message(message, this.kind);
             }
             else
             {
                 var message = DemTypes.FromValue(kind).Descriptor.Parser.ParseFrom(buffer);
 
-                return new PacketMessage(message, this.kind);
+                return new Message(message, this.kind);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Basher
             this.stream.Position = 0L;
         }
 
-        public PacketMessage Current { get; private set; }
+        public Message Current { get; private set; }
 
         object IEnumerator.Current => this.Current;
 
@@ -103,7 +103,7 @@ namespace Basher
             this.stream?.Dispose();
         }
 
-        public IEnumerator<PacketMessage> GetEnumerator()
+        public IEnumerator<Message> GetEnumerator()
         {
             return this;
         }

@@ -17,7 +17,7 @@ namespace Basher
             this.fileEnumerator = new ReplayFileEnumerator(fileStream);
         }
 
-        internal IEnumerable<PacketMessage> GetMessages()
+        internal IEnumerable<Message> GetMessages()
         {
             foreach (var message in this.fileEnumerator)
             {

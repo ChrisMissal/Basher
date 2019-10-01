@@ -47,7 +47,7 @@ namespace Basher
             throw new InvalidDataException("Invalid VarInt.");
         }
 
-        public static T Dump<T>(this T self, ConsoleColor color, int depth = 0)
+        public static T Dump<T>(this T self, ConsoleColor color, int tabs = 0)
         {
             lock (consoleLock)
             {
@@ -56,7 +56,7 @@ namespace Basher
                     Console.ForegroundColor += 6;
                 }
                 Console.ForegroundColor = color;
-                Output.Write(DumpTabs[depth]);
+                Output.Write(DumpTabs[tabs]);
                 Output.WriteLine(self);
                 Console.ResetColor();
             }

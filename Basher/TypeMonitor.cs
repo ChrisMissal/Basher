@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Basher
 {
-    internal class TypeMonitor : IObservable<PacketMessage>, IDisposable
+    internal class TypeMonitor : IObservable<Message>, IDisposable
     {
-        private readonly List<IObserver<PacketMessage>> observers = new List<IObserver<PacketMessage>>();
-        private readonly BlockingCollection<PacketMessage>[] collections;
+        private readonly List<IObserver<Message>> observers = new List<IObserver<Message>>();
+        private readonly BlockingCollection<Message>[] collections;
 
-        public TypeMonitor(params BlockingCollection<PacketMessage>[] collections)
+        public TypeMonitor(params BlockingCollection<Message>[] collections)
         {
             this.collections = collections;
         }
 
-        public IDisposable Subscribe(IObserver<PacketMessage> observer)
+        public IDisposable Subscribe(IObserver<Message> observer)
         {
             if (!this.observers.Contains(observer))
             {
@@ -24,10 +25,14 @@ namespace Basher
             return new MessageUnsubscriber(this.observers, observer);
         }
 
-        public void Start(IEnumerable<PacketMessage> messages)
+        public void Start(IEnumerable<Message> messages, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             foreach (var message in messages)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 foreach (var observer in this.observers)
                 {
                     observer.OnNext(message);

@@ -6,10 +6,10 @@ namespace Basher
 {
     internal class MessageUnsubscriber : IDisposable
     {
-        private readonly List<IObserver<PacketMessage>> observers;
-        private readonly IObserver<PacketMessage> observer;
+        private readonly List<IObserver<Message>> observers;
+        private readonly IObserver<Message> observer;
 
-        public MessageUnsubscriber(List<IObserver<PacketMessage>> observers, IObserver<PacketMessage> observer)
+        public MessageUnsubscriber(List<IObserver<Message>> observers, IObserver<Message> observer)
         {
             this.observers = observers.ToList();
             this.observer = observer;
